@@ -209,7 +209,7 @@ bindsym $mod+Pause mode "$mode_system"
 # Automatically locks your screen before suspend/hibernation and after being idle for some time. Specify the time with xset if needed.
 # The locker must be no forking, you must pass the no fork (-n) flag to i3lock here
 exec --no-startup-id /usr/bin/xss-lock -n /usr/share/doc/xss-lock/dim-screen.sh -- $Locker -n
-
+exec --no-startup-id /usr/bin/redshift
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(~/get_running_audio_sink.sh) +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(~/get_running_audio_sink.sh) -5% #decrease sound volume

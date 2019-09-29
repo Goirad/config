@@ -33,7 +33,7 @@ let g:airline_solarized_bg='dark'
 let g:airline_powerline_fonts=1
 
 set termguicolors
-colorscheme NeoSolarized
+silent! colorscheme NeoSolarized
 set background=dark
 
 set number
