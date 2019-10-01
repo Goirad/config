@@ -11,7 +11,7 @@ sudo apt install htop -qy
 sudo apt install feh -qy
 sudo apt install pavucontrol -qy
 sudo apt install redshift -qy
-
+sudo apt install lm-sensors -qy
 #
 #emacs
 sudo add-apt-repository ppa:kelleyk/emacs -y
