@@ -1,4 +1,4 @@
-let g:python3_host_prog='/usr/bin/python3.6'
+let g:python3_host_prog='/usr/bin/python3'
 
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
@@ -17,7 +17,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 
 " (Optional) Multi-entry selection UI.
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
@@ -40,8 +40,12 @@ set termguicolors
 silent! colorscheme NeoSolarized
 set background=dark
 
-set number
+set number relativenumber
 
 let g:deoplete#enable_at_startup=1
 
 set updatetime=100
+
+" Shortcuts
+map <C-Space> <Esc>
+nnoremap S :%s//g<Left><Left>

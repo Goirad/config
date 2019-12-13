@@ -12,6 +12,16 @@ warning = 20.0
 alert = 10.0
 
 [[block]]
+block = "net"
+device = "wlp3s0"
+ssid = true
+bitrate = true
+interval = 5
+speed_down = false
+speed_up = false
+graph_down = true
+
+[[block]]
 block = "memory"
 display_type = "memory"
 format_mem = "{Mup}%"
@@ -30,6 +40,11 @@ chip = "*-isa-*"
 
 [[block]]
 block = "sound"
+
+[[block]]
+block = "battery"
+interval = 1
+device = "BAT1"
 
 [[block]]
 block = "time"

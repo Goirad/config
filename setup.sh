@@ -5,6 +5,7 @@ sudo apt install git -qy
 git config --global user.email "goiradio1@gmail.com"
 git config --global user.name "Dario Gonzalez"
 git config --global push.default simple
+git config --global core.editor nvim
 
 sudo apt install curl -qy
 sudo apt install htop -qy
@@ -12,11 +13,8 @@ sudo apt install feh -qy
 sudo apt install pavucontrol -qy
 sudo apt install redshift -qy
 sudo apt install lm-sensors -qy
-#
-#emacs
-sudo add-apt-repository ppa:kelleyk/emacs -y
-sudo apt-get update
-sudo apt install emacs26-nox -qy
+sudo apt install firefox -qy
+sudo apt install xinit -qy
 
 #rust
 curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
