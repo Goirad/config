@@ -46,11 +46,7 @@ sudo apt install fonts-powerline -qy
 
 #i3status-rust
 sudo apt install libdbus-1-dev -qy #only on 16.04
-git clone https://github.com/greshake/i3status-rust
-cd i3status-rust && cargo build --release
-mkdir -p ~/bin
-cp target/release/i3status-rs ~/bin/i3status-rs
-cd ~
+cargo install --git https://github.com/greshake/i3status-rust
 
 #get configs
 git clone https://github.com/goirad/config
@@ -62,6 +58,7 @@ cp config/.bashrc ~/.bashrc
 cp config/redshift.conf ~/.config/
 
 #install neovim plugins then exit
+#also installs fzf
 nvim +'PlugInstall --sync' +qa
 
 #i3
