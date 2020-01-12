@@ -18,11 +18,15 @@ Plug 'autozimu/LanguageClient-neovim', {
 
 " (Optional) Multi-entry selection UI.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'rhysd/conflict-marker.vim'
 
-Plug 'cespare/vim-toml'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+
+Plug 'terryma/vim-smooth-scroll'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'stephpy/vim-yaml'
-Plug 'rust-lang/rust.vim'
-
+Plug 'cespare/vim-toml'
 " Inatialize plugin system
 call plug#end()
 
@@ -40,12 +44,39 @@ set termguicolors
 silent! colorscheme NeoSolarized
 set background=dark
 
-set number relativenumber
+set number
+set relativenumber
+set expandtab
+set shiftwidth=4
+
+nnoremap <C-p> :FZF <CR>
+nnoremap <M-b> :execute ":!git blame % -L " . line('.') . "," . line('.')<CR>
+
+" Indenting in normal mode
+nnoremap <Tab> >>
+nnoremap <S-Tab> <<
+
+" Easier escaping
+inoremap <C-Space> <Esc>
+
+" Moving through splits
+nnoremap <M-h> <C-w>h<CR>
+nnoremap <M-l> <C-w>l<CR>
+inoremap <M-h> <C-w>h<CR>
+inoremap <M-l> <C-w>l<CR>
+
+
+set list
 
 let g:deoplete#enable_at_startup=1
 
 set updatetime=100
 
-" Shortcuts
-map <C-Space> <Esc>
-nnoremap S :%s//g<Left><Left>
+
+
+" Smooth Scroll bindings
+
+nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 10, 2)<CR>
+nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 10, 2)<CR>
+nnoremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 10, 4)<CR>
+nnoremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 10, 4)<CR>
