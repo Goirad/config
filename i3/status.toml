@@ -14,12 +14,6 @@ alert = 10.0
 [[block]]
 block = "net"
 device = "wlp3s0"
-ssid = true
-bitrate = true
-interval = 5
-speed_down = false
-speed_up = false
-graph_down = true
 
 [[block]]
 block = "memory"
@@ -40,13 +34,15 @@ chip = "*-isa-*"
 
 [[block]]
 block = "sound"
+on_click = "pavucontrol"
 
 [[block]]
 block = "battery"
-interval = 1
-device = "BAT1"
+interval = 10
+format = "{percentage}%"
+
 
 [[block]]
 block = "time"
 interval = 1
-format = "%a %d/%m %r"
+format = "%a %m/%d %r"
