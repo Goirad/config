@@ -52,14 +52,21 @@ cargo install --git https://github.com/greshake/i3status-rust
 git clone https://github.com/goirad/config
 mkdir -p ~/.config/i3
 mkdir -p ~/.config/nvim
+mkdir -p ~/.config/alacritty
 cp config/i3/* ~/.config/i3
 cp config/nvim/* ~/.config/nvim/
+cp config/alacritty.yml ~/.config/alacritty/
 cp config/.bashrc ~/.bashrc
 cp config/redshift.conf ~/.config/
 
 #install neovim plugins then exit
 #also installs fzf
 nvim +'PlugInstall --sync' +qa
+
+#alacritty
+sudo add-apt-repository ppa:mmstick76/alacritty
+sudo apt install alacritty
+sudo update-alternatives --set x-terminal-emulator alacritty
 
 #i3
 /usr/lib/apt/apt-helper download-file http://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2019.02.01_all.deb keyring.deb SHA256:176af52de1a976f103f9809920d80d02411ac5e763f695327de9fa6aff23f416
