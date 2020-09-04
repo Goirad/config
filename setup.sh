@@ -7,75 +7,71 @@ git config --global user.name "Dario Gonzalez"
 git config --global push.default simple
 git config --global core.editor nvim
 
-sudo apt install curl -qy
-sudo apt install htop -qy
-sudo apt install feh -qy
-sudo apt install pavucontrol -qy
-sudo apt install redshift -qy
-sudo apt install lm-sensors -qy
-sudo apt install firefox -qy
-sudo apt install xinit -qy
+sudo apt install -qy curl htop feh \
+                     pavucontrol redshift \
+                     lm-sensors firefox xinit
 
 #rust
-curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
-source .cargo/env
+if ! rustup --version &>/dev/null ; then
+    curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
+    rustup component add rust-analysis rust-src
+fi
+source ~/.cargo/env
 
 #utilities
-rustup component add rls rust-analysis rust-src
 cargo install ripgrep
 cargo install fd-find
+mkdir ~/oss
+pushd ~/oss
+git clone https://github.com/rust-analyzer/rust-analyzer.git
+cd rust-analyzer
+cargo xtask install --server
+popd
 
 #neovim
-sudo add-apt-repository ppa:jonathonf/python-3.6 -y
-sudo add-apt-repository ppa:neovim-ppa/stable -y
-sudo apt update
-sudo apt install python3.6 -fqy
-sudo apt install python3-pip -qy
-/usr/bin/python3.6 -m pip install --user pynvim
 sudo apt-get install neovim -qy
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 #fonts
-#sudo apt install fonts-font-awesome
-cd Downloads
-curl -OJL http://mirrors.kernel.org/ubuntu/pool/main/f/fonts-font-awesome/fonts-font-awesome_5.0.10+really4.7.0~dfsg-1_all.deb
-sudo apt install ./fonts-font-awesome_5.0.10+really4.7.0~dfsg-1_all.deb -qy
-cd ~
-sudo apt install fonts-powerline -qy
+sudo apt install -qy fonts-font-awesome \
+                     fonts-powerline \
+                     fonts-firacode
 
 #i3status-rust
-sudo apt install libdbus-1-dev -qy #only on 16.04
+sudo apt install libdbus-1-dev -qy
 cargo install --git https://github.com/greshake/i3status-rust
 
 #get configs
 git clone https://github.com/goirad/config
-mkdir -p ~/.config/i3
-mkdir -p ~/.config/nvim
-mkdir -p ~/.config/alacritty
-cp config/i3/* ~/.config/i3
-cp config/nvim/* ~/.config/nvim/
-cp config/alacritty.yml ~/.config/alacritty/
-cp config/.bashrc ~/.bashrc
-cp config/redshift.conf ~/.config/
+rm -rf ~/.config/i3 ~/.config/nvim ~/.config/alacritty \
+       ~/.bashrc ~/.config/redshift.conf ~/.config/scripts
+
+#link them to where they are expected
+#might be a better idea to link individual files instead of folders?
+ln -s ~/config/i3 ~/.config/
+ln -s ~/config/nvim ~/.config/
+ln -s ~/config/alacritty ~/.config/
+ln -s ~/config/.bashrc ~/
+ln -s ~/config/redshift.conf ~/.config/
+ln -s ~/config/scripts ~/.config
 
 #install neovim plugins then exit
 #also installs fzf
 nvim +'PlugInstall --sync' +qa
 
 #alacritty
-sudo add-apt-repository ppa:mmstick76/alacritty
-sudo apt install alacritty
-sudo update-alternatives --set x-terminal-emulator alacritty
+#first some build deps
+sudo apt install -qy cmake pkg-config libfreetype6-dev \
+                     libfontconfig1-dev libxcb-xfixes0-dev \
+                     python3
+cargo install --git https://github.com/alacritty/alacritty
+sudo update-alternatives --install /usr/bin/x-terminal-emulator \
+    x-terminal-emulator ~/.cargo/bin/alacritty 50
 
-#i3
-/usr/lib/apt/apt-helper download-file http://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2019.02.01_all.deb keyring.deb SHA256:176af52de1a976f103f9809920d80d02411ac5e763f695327de9fa6aff23f416
-sudo dpkg -i keyring.deb
-
-sudo add-apt-repository "deb http://debian.sur5r.net/i3/ xenial universe" -y
-sudo apt update -q
-sudo apt install i3 -qy
-
+#i3gaps
+sudo add-apt-repository ppa:kgilmer/speed-ricer
+sudo apt-get update
 # fix nautilus bug for i3
 gsettings set org.gnome.desktop.background show-desktop-icons false
 

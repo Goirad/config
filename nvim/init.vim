@@ -9,7 +9,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'iCyMind/NeoSolarized'
+Plug 'morhetz/gruvbox'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -36,12 +36,11 @@ let g:LanguageClient_useVirtualText=1
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
     \ }
-let g:airline_theme='solarized'
-let g:airline_solarized_bg='dark'
+let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts=1
 
 set termguicolors
-silent! colorscheme NeoSolarized
+colorscheme gruvbox
 set background=dark
 
 set number

@@ -37,7 +37,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+    alacritty|xterm-color|*-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -91,9 +91,19 @@ fi
 alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
-alias e='emacs'
+
+# other programs
 alias v='nvim'
+alias j='jobs'
+
+# git aliases
 alias glo='git log --oneline --graph'
+alias gd='git diff'
+alias gds='git diff --stat'
+alias gca='git commit --amend'
+alias gap='git add --patch'
+alias gs='git status'
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -118,4 +128,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
+source ~/.cargo/env
 

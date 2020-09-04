@@ -1,4 +1,4 @@
-theme = "solarized-dark"
+theme = "gruvbox-dark"
 icons = "awesome"
 
 [[block]]
@@ -35,12 +35,6 @@ chip = "*-isa-*"
 [[block]]
 block = "sound"
 on_click = "pavucontrol"
-
-[[block]]
-block = "battery"
-interval = 10
-format = "{percentage}%"
-
 
 [[block]]
 block = "time"
