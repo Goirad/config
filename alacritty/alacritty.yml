@@ -19,7 +19,7 @@
   # If both are `0`, this setting is ignored.
   #dimensions:
   #  columns: 0
-  #  lines: 0
+  #  lines: 55
 
   # Window position (changes require restart)
   #
@@ -148,7 +148,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  #size: 11.0
+  size: 10.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -160,30 +160,9 @@ font:
   # the default being at the bottom. Increasing `x` moves the glyph to the right,
   # increasing `y` moves the glyph upwards.
   #glyph_offset:
-  #  x: 0
+  #  x: 0.5
   #  y: 0
 
-  # Thin stroke font rendering (macOS only)
-  #
-  # Thin strokes are suitable for retina displays, but for non-retina screens
-  # it is recommended to set `use_thin_strokes` to `false`
-  #
-  # macOS >= 10.14.x:
-  #
-  # If the font quality on non-retina display looks bad then set
-  # `use_thin_strokes` to `true` and enable font smoothing by running the
-  # following command:
-  #   `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
-  #
-  # This is a global setting and will require a log out or restart to take
-  # effect.
-  #use_thin_strokes: true
-
-# If `true`, bold text is drawn using the bright color variants.
-#draw_bold_text_with_bright_colors: true
-
-# Base16 Gruvbox dark, hard 256 - alacritty color config
-# Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 colors:
   # Default colors
   primary:
@@ -324,7 +303,7 @@ colors:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-#background_opacity: 1.0
+#background_opacity: 0.8
 
 #selection:
   #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
@@ -433,6 +412,7 @@ colors:
     #   - (Linux/BSD) xdg-open
     #   - (Windows) explorer
     #launcher:
+    #  https://google.com
     #  program: xdg-open
     #  args: []
 
@@ -597,8 +577,10 @@ key_bindings:
   #- { key: Copy,                     action: Copy                             }
   #- { key: L,         mods: Control, action: ClearLogNotice                   }
   #- { key: L,         mods: Control, chars: "\x0c"                            }
-  - { key: Up,    mods: Shift,   action: ScrollLineUp,   mode: ~Alt       }
-  - { key: Down,    mods: Shift,   action: ScrollLineDown,   mode: ~Alt       }
+  - { key: Space, mods: Shift|Control, action: ToggleViMode }
+  - { key: Up,         mods: Shift,   action: ScrollLineUp,   mode: ~Alt       }
+  - { key: Down,       mods: Shift,   action: ScrollLineDown,   mode: ~Alt       }
+  - { key: P,          mods: Control|Alt, action: SpawnNewInstance }
   #- { key: PageUp,    mods: Shift,   action: ScrollPageUp,   mode: ~Alt       }
   #- { key: PageDown,  mods: Shift,   action: ScrollPageDown, mode: ~Alt       }
   #- { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }

@@ -1,7 +1,6 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+
 # for examples
-export PATH="/home/goirad/Programs/factorio_alpha_x64_0.17.14/factorio/bin/x64:$PATH"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -16,8 +15,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=20000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -25,7 +24,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -37,7 +36,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    alacritty|xterm-color|*-256color) color_prompt=yes;;
+    xterm-color|*-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -56,11 +55,44 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
+PROMPT_COMMAND=__prompt_command # Func to gen PS1 after CMDs
+
+# Prints pwd but replaces some prefixes with shorthands
+pwd_with_special() {
+    local specials=(
+    )
+    local present="$(dirs +0)"
+
+    for special in "${specials[@]}"; do
+        if [[ $present =~ $special* ]]; then
+            present="${present#$special}"
+            present="$(basename "$special")$present"
+            break # stop on first match
+        fi
+    done
+    echo "$present"
+}
+
+__prompt_command() {
+    local EXIT="$?" # This needs to be first
+
+    local RCol='\[\e[m\]' # Stop color
+
+    local Cya='\[\e[1;36m\]' # Default
+    local Red='\[\e[1;31m\]'
+
+    PS1="${Cya}$(date +'%H:%M:%S') ${RCol}"
+
+    if [ $EXIT != 0 ]; then
+        PS1+="${Red}$EXIT ${RCol}" # Add red if exit code non 0
+    else
+        PS1+="${Cya}$EXIT ${RCol}" # Could be skipped, but might be nice if searching
+                                   # through console output (eg $ awk '$2 != 0')
+    fi
+
+    PS1+="${Cya}$(pwd_with_special)$ ${RCol}"
+}
+
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
@@ -88,21 +120,65 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alFh'
+alias ll='exa -lF'
 alias la='ls -A'
 alias l='ls -CF'
 
-# other programs
-alias v='nvim'
-alias j='jobs'
+alias exal='exa -lF --group-directories-first'
+alias etree='exa -T --git-ignore'
+alias t='task'
+postpone() {
+    # postpones a task
+    local task="$1"
+    local current_v="$(task $task 2>/dev/null | grep '^Tags' | grep -o 'v[0-9]\.[0-9]\+')"
+    if [ -z "$current_v" ]; then
+        echo "No version tag found on task $task"
+        return 1
+    fi
 
-# git aliases
-alias glo='git log --oneline --graph'
+    local v_major="$(echo "$current_v" | cut -d. -f1)"
+    local v_minor="$(echo "$current_v" | cut -d. -f2)"
+    local next_v_minor=$((v_minor + 1))
+    local next_v="$v_major.$next_v_minor"
+    task "$task" modify "-$current_v" "+$next_v"
+}
+
+# git convenience aliases
+alias glo='git log --oneline -n 20 --graph'
+alias gap='git add --patch'
+alias gca='git commit --amend'
+alias gdms='git diff master --stat'
+alias gdm='git diff master'
 alias gd='git diff'
 alias gds='git diff --stat'
-alias gca='git commit --amend'
-alias gap='git add --patch'
+alias gdp='git diff "$(git parent 2>/dev/null)"'
+alias gdps='git diff "$(git parent 2>/dev/null)" --stat'
 alias gs='git status'
+alias gsu='git status -uno'
+alias gc='git checkout'
+
+alias v="nvim"
+alias sv='sudo nvim'
+
+# creates a new console window in the same directory as the current session
+alias sp='alacritty & disown'
+alias j='jobs'
+
+# cargo convenience
+alias cb='cargo build'
+alias cr='cargo run'
+alias cbr='cargo build --release'
+alias crr='cargo run --release'
+
+# common dirs I go to
+alias roche='cd ~/work/roche'
+alias b='cd ~/work/roche/server/backend'
+alias backend='cd ~/work/roche/server/backend'
+alias devops='cd ~/work/devops'
+alias ..='cd ../'
+alias ...='cd ../../'
+
+alias drop_db='~/work/roche/tools/db/drop-db.sh'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -128,5 +204,13 @@ if ! shopt -oq posix; then
   fi
 fi
 
-source ~/.cargo/env
+export TERM=xterm-256color
+export PS1="\[\e[0;36m\]\u@\h \w\$ \[\e[m\]"
+export PATH=$PATH:~/scripts:~/go/bin
+export PAGER=less
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export EDITOR=nvim
 
