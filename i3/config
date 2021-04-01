@@ -30,7 +30,6 @@ font pango:Fira Code 10
 floating_modifier $mod
 
 for_window [class=".*"] border pixel 1
-gaps inner 7
 hide_edge_borders smart
 
 # start a terminal
@@ -39,6 +38,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 # start firefox
 bindsym $mod+Shift+Return exec firefox
 
+# start scrot to select an area of the screen
+bindsym --release $mod+p exec scrot -s -e 'mv $f ~/Pictures/Screenshots/'
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -54,22 +55,22 @@ for_window [instance="dmenu-fzf"] floating enable
 # window navigation and movement
 # alternatively, you can use the cursor keys:
 focus_follows_mouse no
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
-bindsym $mod+Ctrl+Left move workspace to output left
-bindsym $mod+Ctrl+Right move workspace to output right
+bindsym $mod+Ctrl+h move workspace to output left
+bindsym $mod+Ctrl+l move workspace to output right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+Shift+v split h
 
 # split in vertical orientation
 bindsym $mod+v split v

@@ -1,5 +1,3 @@
-let g:python3_host_prog='/usr/bin/python3.6'
-
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
@@ -92,8 +90,7 @@ set list
 let g:deoplete#enable_at_startup=1
 
 set updatetime=100
-
-
+set diffopt+=iwhite
 
 " Smooth Scroll bindings
 

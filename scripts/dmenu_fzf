@@ -1,3 +1,3 @@
 #!/bin/bash
 
-i3-msg exec "$(dmenu_path | ~/.fzf/bin/fzf)"
+i3-msg exec "$(dmenu_path | ~/.vim/plugged/fzf/bin/fzf)"

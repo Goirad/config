@@ -120,12 +120,10 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='exa -lF'
+alias ll='ls -ahl'
 alias la='ls -A'
 alias l='ls -CF'
 
-alias exal='exa -lF --group-directories-first'
-alias etree='exa -T --git-ignore'
 alias t='task'
 postpone() {
     # postpones a task
@@ -170,15 +168,9 @@ alias cr='cargo run'
 alias cbr='cargo build --release'
 alias crr='cargo run --release'
 
-# common dirs I go to
-alias roche='cd ~/work/roche'
-alias b='cd ~/work/roche/server/backend'
-alias backend='cd ~/work/roche/server/backend'
-alias devops='cd ~/work/devops'
 alias ..='cd ../'
 alias ...='cd ../../'
-
-alias drop_db='~/work/roche/tools/db/drop-db.sh'
+alias fg='fg; history -d $((HISTCMD-1))' # preven fg from polluting history
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
