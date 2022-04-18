@@ -1,3 +1,5 @@
+let g:python3_host_prog='/usr/bin/python3.6'
+
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
@@ -28,6 +30,7 @@ Plug 'terryma/vim-smooth-scroll'
 " Plug 'jiangmiao/auto-pairs'
 Plug 'stephpy/vim-yaml'
 Plug 'cespare/vim-toml'
+Plug 'vimwiki/vimwiki'
 " Inatialize plugin system
 call plug#end()
 
@@ -37,15 +40,28 @@ set signcolumn=yes
 call deoplete#custom#option({
     \ 'auto_refresh_delay': 100,
     \ })
-let g:LanguageClient_useVirtualText='All'
+"let g:LanguageClient_useVirtualText='All'
 let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
+let g:LanguageClient_loggingLevel = 'WARN'
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rust-analyzer'],
-    \ }
-let g:LanguageClient_loggingLevel = 'ERROR'
+    \ 'rust': {
+    \   'name': 'rust-analyzer',
+    \   'command': ['rust-analyzer'],
+    \   'initializationOptions': {
+    \     "cargo": {
+    \       "loadOutDirsFromCheck": v:true,
+    \     },
+    \     "procMacro": {
+    \       "enable": v:false,
+    \     },
+    \   },
+    \ },
+    \}
 let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
 let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts=1
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown'}]
+let g:vimwiki_auto_header = 1
 
 set termguicolors
 colorscheme gruvbox
@@ -59,7 +75,7 @@ set shiftwidth=4
 set cursorline
 set cursorcolumn
 set colorcolumn=80
-command Date :r !~/.config/scripts/date.sh
+command! Date :r !~/.config/scripts/date.sh
 nnoremap <C-p> :FZF <CR>
 nnoremap <C-j> :Buffers <CR>
 nnoremap <M-b> :execute ":!git blame % -L " . line('.') . "," . line('.')<CR>
@@ -68,19 +84,21 @@ nnoremap S :%s//g<Left><Left>
 
 " Goto definition
 nnoremap <M-g> :call LanguageClient#textDocument_definition() <CR>
+" Explain error
+nnoremap <M-e> :call LanguageClient#explainErrorAtPoint() <CR>
 
 " Easier escaping
 inoremap <C-Space> <Esc>
 
 " Moving through splits
-nnoremap <M-h> <C-w>h<CR>
-nnoremap <M-l> <C-w>l<CR>
-nnoremap <M-j> <C-w>j<CR>
-nnoremap <M-k> <C-w>k<CR>
-inoremap <M-h> <C-w>h<CR>
-inoremap <M-l> <C-w>l<CR>
-inoremap <M-j> <C-w>j<CR>
-inoremap <M-k> <C-w>k<CR>
+nnoremap <M-h> <C-w>h
+nnoremap <M-l> <C-w>l
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+inoremap <M-h> <C-w>h
+inoremap <M-l> <C-w>l
+inoremap <M-j> <C-w>j
+inoremap <M-k> <C-w>k
 
 " Moving through buffers
 nnoremap <C-M-h> :bp<CR>
@@ -91,6 +109,10 @@ let g:deoplete#enable_at_startup=1
 
 set updatetime=100
 set diffopt+=iwhite
+
+autocmd bufreadpre,bufnewfile *.wiki setlocal textwidth=80
+autocmd bufreadpre *.md   setlocal textwidth=80
+
 
 " Smooth Scroll bindings
 

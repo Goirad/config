@@ -10,6 +10,7 @@ esac
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
+HISTIGNORE='fg:fg *:j:gdm:gs'
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -170,7 +171,6 @@ alias crr='cargo run --release'
 
 alias ..='cd ../'
 alias ...='cd ../../'
-alias fg='fg; history -d $((HISTCMD-1))' # preven fg from polluting history
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
