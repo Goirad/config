@@ -1,0 +1,43 @@
+#!/bin/bash
+
+level0="Set up for a call\nTear down a call\nMove everything left"
+level0_0="Zoom\nSlack"
+
+query() {
+    local options="$1"
+    printf "$options\n" | dmenu -i -l 5
+}
+
+first_level="$(query "$level0")"
+
+case "$first_level" in
+    "Set up for a call")
+        app="$(query "$level0_0")"
+        i3-msg layout tabbed
+        pavucontrol & disown
+        blueman-manager & disown
+        ask $level_0_0
+        case "$app" in
+            "Zoom") zoom & disown ;;
+            "Slack") slack & disown ;;
+        esac
+    ;;
+    "Tear down a call")
+        app="$(query "$level0_0")"
+        i3-msg layout default
+        killall pavucontrol
+        killall blueman-applet
+        killall blueman-manager
+        ask $level_0_0
+        case "$app" in
+            "Zoom") killall zoom ;;
+            "Slack") killall slack ;;
+        esac
+    ;;
+    "Move everything left")
+        workspaces=$(i3-msg -t get_workspaces | jq -r '.[].name')
+        for ws in $workspaces; do
+            i3-msg [workspace=$ws] move workspace to output left
+        done
+    ;;
+esac
