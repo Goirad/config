@@ -1,5 +1,3 @@
-let g:python3_host_prog='/usr/bin/python3.6'
-
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
