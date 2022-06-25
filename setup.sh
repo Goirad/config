@@ -8,7 +8,7 @@ sudo apt install -qy \
     libssl-dev libdbus-1-dev taskwarrior \
     cmake pkg-config libfreetype6-dev \
     libfontconfig1-dev libxcb-xfixes0-dev \
-    i3 libsensors-dev
+    i3 libsensors-dev nitrogen
 
 #git
 git config --global user.email "goiradio1@gmail.com"
