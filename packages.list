@@ -1,0 +1,33 @@
+# Dependencies
+# For i3/i3status-rust
+fonts-firacode
+fonts-font-awesome
+fonts-powerline
+libdbus-1-dev
+libsensors-dev
+libfontconfig1-dev
+libfreetype6-dev
+lm-sensors
+# Programs
+blueman
+firefox
+git
+git-lfs
+htop
+i3
+neovim
+nitrogen
+pavucontrol
+redshift
+scrot
+shellcheck
+taskwarrior
+# General Usage
+cmake
+curl
+build-essential
+libssl-dev
+libxcb-xfixes0-dev
+pkg-config
+python3-pip
+xinit

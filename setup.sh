@@ -1,14 +1,7 @@
 #!/bin/bash
 
-sudo apt install -qy \
-    git git-lfs python3-pip build-essential blueman \
-    curl htop scrot pavucontrol redshift \
-    lm-sensors firefox xinit neovim shellcheck \
-    fonts-font-awesome fonts-powerline fonts-firacode \
-    libssl-dev libdbus-1-dev taskwarrior \
-    cmake pkg-config libfreetype6-dev \
-    libfontconfig1-dev libxcb-xfixes0-dev \
-    i3 libsensors-dev nitrogen
+packages=$(sed '/^#/d' < packages.list)
+sudo apt install -qy $packages
 
 #git
 git config --global user.email "goiradio1@gmail.com"
