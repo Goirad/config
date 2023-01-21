@@ -10,6 +10,7 @@ esac
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
+# prevent common command from polluting history
 HISTIGNORE='fg:fg *:j:gdm:gs'
 
 # append to the history file, don't overwrite it
@@ -47,12 +48,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-	color_prompt=
+        color_prompt=
     fi
 fi
 
@@ -76,6 +77,7 @@ pwd_with_special() {
 
 __prompt_command() {
     local EXIT="$?" # This needs to be first
+    EXIT=$(printf '%3d' $EXIT)
 
     local RCol='\[\e[m\]' # Stop color
 
@@ -156,8 +158,8 @@ alias gs='git status'
 alias gsu='git status -uno'
 alias gc='git checkout'
 
-alias v="nvim"
-alias sv='sudo nvim'
+alias v="~/oss/nvim.appimage"
+alias sv='sudo ~/oss/nvim.appimage'
 
 # creates a new console window in the same directory as the current session
 alias sp='alacritty & disown'
